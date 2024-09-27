@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
-import {Observable} from "rxjs";
+import { Observable } from "rxjs";
 import {API_URL} from "./api-url.token";
 
 @Injectable({
@@ -38,7 +38,7 @@ export class ApiService {
   private get headers(): HttpHeaders {
     const headersConfig = {
       'Content-Type': 'application/json',
-      Accept: "application/json"
+      Accept: "application/json",
     };
 
     return new HttpHeaders(headersConfig);

@@ -1,0 +1,28 @@
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.form-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  &__header {
+    position: relative;
+    &-title {
+      margin: 0;
+    }
+  }
+}
+
+.home-btn {
+  position: absolute;
+  left: -3rem;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+

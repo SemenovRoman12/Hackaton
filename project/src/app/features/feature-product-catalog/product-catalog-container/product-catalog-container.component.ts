@@ -1,19 +1,17 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
 import {ApiService} from "@core/http/api.service";
+import {BackHomeComponent} from "../../../shared/back-home/back-home.component";
 
 @Component({
   selector: 'product-catalog-container',
   standalone: true,
-  imports: [],
+  imports: [
+    BackHomeComponent
+  ],
   templateUrl: './product-catalog-container.component.html',
-  styleUrl: './product-catalog-container.component.scss'
+  styleUrl: './product-catalog-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductCatalogContainerComponent implements OnInit{
-  private readonly apiService = inject(ApiService);
+export class ProductCatalogContainerComponent {
 
-  ngOnInit() {
-    this.apiService.get<any>('/cart').subscribe(
-      v => console.log(v)
-    )
-  }
 }

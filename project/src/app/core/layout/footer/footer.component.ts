@@ -1,0 +1,16 @@
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {MatToolbar} from "@angular/material/toolbar";
+
+@Component({
+  selector: 'app-footer',
+  standalone: true,
+  imports: [
+    MatToolbar
+  ],
+  templateUrl: './footer.component.html',
+  styleUrl: './footer.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class FooterComponent {
+
+}

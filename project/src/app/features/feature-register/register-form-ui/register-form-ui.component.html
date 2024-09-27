@@ -1,0 +1,44 @@
+<app-form-ui [title]="title">
+  <form
+    [formGroup]="registerForm"
+    class="reg-form"
+    (ngSubmit)="onRegister()"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>ФИО:</mat-label>
+      <input
+        matInput
+        formControlName="fio"
+      >
+      <mat-error>Введите фио</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Электронная почта</mat-label>
+      <input
+        matInput
+        formControlName="email"
+      >
+      <mat-error>Некоректно</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Пароль:</mat-label>
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+      >
+      @if (!this.registerForm.controls.password.hasError('required') && this.registerForm.invalid) {
+        <mat-error>Недостаточно символов</mat-error>
+      }
+      @if(this.registerForm.controls.password.hasError('required')) {<mat-error>Введите пароль</mat-error>}
+    </mat-form-field>
+
+    <button
+      mat-fab
+      extended
+      color="primary"
+      [disabled]="registerForm.invalid"
+    >Зарегестрироваться</button>
+  </form>
+</app-form-ui>
+
