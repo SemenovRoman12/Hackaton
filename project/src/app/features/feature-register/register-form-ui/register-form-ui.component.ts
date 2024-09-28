@@ -2,7 +2,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, inject, OnInit, Output
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
-import {BackHomeComponent} from "../../../shared/back-home/back-home.component";
+import {BackHomeUiComponent} from "../../../shared/back-home-ui/back-home-ui.component";
 import {MatFabButton} from "@angular/material/button";
 import {FormUiComponent} from "../../../shared/form-ui/form-ui.component";
 
@@ -15,7 +15,7 @@ import {FormUiComponent} from "../../../shared/form-ui/form-ui.component";
     MatInput,
     MatError,
     MatLabel,
-    BackHomeComponent,
+    BackHomeUiComponent,
     MatFabButton,
     FormUiComponent
   ],

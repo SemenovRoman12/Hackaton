@@ -4,7 +4,7 @@ import {ApiService} from "@core/http/api.service";
 import {LocalStorageTokenService} from "@core/auth/data-access/services/local-storage-token.service";
 import {AuthActions} from "@core/auth/data-access/+state/auth.actions";
 import {catchError, concatMap, map, of, switchMap, tap, withLatestFrom} from "rxjs";
-import {NewUser, RegisterResponse, SignAuthResponse, SignAuthUser} from "@core/auth/data-access/+state/sign.auth.model";
+import {NewUser, RegisterResponse, SignAuthResponse, SignAuthUser} from "@core/auth/data-access/models/sign.auth.model";
 import {Router} from "@angular/router";
 
 export const registerEffect$ = createEffect(
@@ -67,8 +67,23 @@ export const loginSuccessEffect$ = createEffect(
       ofType(AuthActions.loginSuccess),
       tap((action) => {
         localStorageTokenService.setItem(action.authToken);
-        router.navigate(['']);
+        router.navigate(['/catalog']);
       })
+    );
+  }, {functional: true, dispatch: false}
+);
+
+export const logoutEffect$ = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const router = inject(Router);
+    const localStorageTokenService = inject(LocalStorageTokenService);
+    return actions$.pipe(
+      ofType(AuthActions.logout),
+      tap(() => {
+        localStorageTokenService.removeItem();
+        router.navigate(['/guest/home']);
+      }),
     );
   }, {functional: true, dispatch: false}
 );

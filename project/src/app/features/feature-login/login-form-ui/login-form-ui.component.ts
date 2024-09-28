@@ -2,10 +2,10 @@ import {ChangeDetectionStrategy, Component, EventEmitter, inject, Output} from '
 import {FormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
-import {BackHomeComponent} from "../../../shared/back-home/back-home.component";
+import {BackHomeUiComponent} from "../../../shared/back-home-ui/back-home-ui.component";
 import {FormUiComponent} from "../../../shared/form-ui/form-ui.component";
-import {AuthFacadeService} from "@core/auth/data-access/auth.facade.service";
-import {NewUser, SignAuthUser} from "@core/auth/data-access/+state/sign.auth.model";
+import {AuthFacadeService} from "@core/auth/data-access/services/auth.facade.service";
+import {NewUser, SignAuthUser} from "@core/auth/data-access/models/sign.auth.model";
 import {MatFabButton} from "@angular/material/button";
 
 @Component({
@@ -17,7 +17,7 @@ import {MatFabButton} from "@angular/material/button";
     MatInput,
     ReactiveFormsModule,
     MatLabel,
-    BackHomeComponent,
+    BackHomeUiComponent,
     FormUiComponent,
     MatFabButton
   ],

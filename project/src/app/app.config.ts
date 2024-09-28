@@ -12,6 +12,8 @@ import {provideHttpClient, withInterceptors} from "@angular/common/http";
 import {tokenInterceptor} from "@core/auth/data-access/services/token.interceptor";
 import { authFeature } from "@core/auth/data-access/+state/auth.reducer";
 import * as authEffect from "@core/auth/data-access/+state/auth.effects";
+import * as catalogEffect from "@features/feature-product-catalog/data-access/+state/catalog.effects";
+import {catalogFeature} from "@features/feature-product-catalog/data-access/+state/catalog.reducer";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,9 +22,11 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideStore({
       [authFeature.name]: authFeature.reducer,
+      [catalogFeature.name]: catalogFeature.reducer,
     }),
     provideEffects(
       authEffect,
+      catalogEffect,
     ),
     provideStoreDevtools({
       maxAge: 25,

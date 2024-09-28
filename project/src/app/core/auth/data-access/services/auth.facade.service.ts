@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {AuthActions} from "@core/auth/data-access/+state/auth.actions";
-import {NewUser, SignAuthUser} from "@core/auth/data-access/+state/sign.auth.model";
+import {NewUser, SignAuthUser} from "@core/auth/data-access/models/sign.auth.model";
 
 @Injectable({
   providedIn: 'root'
@@ -15,5 +15,9 @@ export class AuthFacadeService {
 
   public login(userData: SignAuthUser) {
     this.store.dispatch(AuthActions.login({userData}))
+  }
+
+  public logout() {
+    this.store.dispatch(AuthActions.logout());
   }
 }

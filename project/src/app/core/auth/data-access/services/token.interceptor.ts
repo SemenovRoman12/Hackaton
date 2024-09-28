@@ -3,7 +3,6 @@ import {LocalStorageTokenService} from "@core/auth/data-access/services/local-st
 import {inject} from "@angular/core";
 import {Router} from "@angular/router";
 import {catchError, of, throwError} from "rxjs";
-import {AuthActions} from "@core/auth/data-access/+state/auth.actions";
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const localStorageTokenService = inject(LocalStorageTokenService);
@@ -13,7 +12,7 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   if(token) {
     req = req.clone({
       setHeaders: {
-        'Authorization': `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       },
     });
   }

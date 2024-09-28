@@ -1,2 +1,19 @@
-<p>product-catalog-container works!</p>
-<back-home></back-home>
+<ng-container>
+  @switch (loadingStatus()) {
+    @case ('loaded') {
+      <product-catalog
+        [productList]="productsList()"
+      ></product-catalog>
+    }
+    @case ('loading') {
+      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    }
+    @case ('error') {
+      <div class="error-wrapper">
+        <h2>Error!</h2>
+        <h3>{{ errorStatus() | json }}</h3>
+      </div>
+    }
+  }
+</ng-container>
+

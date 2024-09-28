@@ -1,0 +1,8 @@
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  &__item {
+    border-radius: 0 !important;
+  }
+}

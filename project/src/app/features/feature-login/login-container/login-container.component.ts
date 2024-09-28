@@ -1,7 +1,7 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {LoginFormUiComponent} from "@features/feature-login/login-form-ui/login-form-ui.component";
-import {SignAuthUser} from "@core/auth/data-access/+state/sign.auth.model";
-import {AuthFacadeService} from "@core/auth/data-access/auth.facade.service";
+import {SignAuthUser} from "@core/auth/data-access/models/sign.auth.model";
+import {AuthFacadeService} from "@core/auth/data-access/services/auth.facade.service";
 
 @Component({
   selector: 'login-container',
