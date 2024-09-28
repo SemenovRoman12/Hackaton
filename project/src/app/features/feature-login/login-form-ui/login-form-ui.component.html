@@ -1,7 +1,7 @@
 <app-form-ui [title]="title">
   <form
     [formGroup]="loginForm"
-    (ngSubmit)="onLogin($event)"
+    (ngSubmit)="onLogin()"
     class="auth-form"
   >
     <mat-form-field appearance="outline">
@@ -24,7 +24,6 @@
     <button
       mat-fab
       extended
-      color="primary"
       [disabled]="loginForm.invalid"
     >Войти</button>
   </form>

@@ -1,6 +1,5 @@
 import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
-import {ApiService} from "@core/http/api.service";
-import {BackHomeUiComponent} from "../../../shared/back-home-ui/back-home-ui.component";
+import {BackHomeUiComponent} from "@shared/back-home-ui/back-home-ui.component";
 import {CatalogFacadeService} from "@features/feature-product-catalog/data-access/services/catalog.facade.service";
 import {MatProgressBar} from "@angular/material/progress-bar";
 import {ProductCatalogComponent} from "@features/feature-product-catalog/product-catalog/product-catalog.component";

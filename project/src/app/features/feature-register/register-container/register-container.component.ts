@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, inject} from '@angular/core';
 import {RegisterFormUiComponent} from "@features/feature-register/register-form-ui/register-form-ui.component";
-import {AuthFacadeService} from "@core/auth/data-access/services/auth.facade.service";
+import {AuthFacadeService} from "@core/auth/data-access/auth.facade.service";
 import {NewUser} from "@core/auth/data-access/models/sign.auth.model";
 
 @Component({

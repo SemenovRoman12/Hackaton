@@ -35,7 +35,7 @@ export const catalogFeature = createFeature({
       error,
     })),
   ),
-  extraSelectors: ({selectCatalogState}) => ({
+  extraSelectors: ({selectCatalogState, selectLoading}) => ({
     ...catalogAdapter.getSelectors(selectCatalogState),
   })
 });

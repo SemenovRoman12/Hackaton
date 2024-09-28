@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {BackHomeUiComponent} from "../back-home-ui/back-home-ui.component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
@@ -22,6 +22,5 @@ import {MatInput} from "@angular/material/input";
   styleUrl: './form-ui.component.scss'
 })
 export class FormUiComponent {
-  @Input()
-  title: string = '';
+  public title = input.required<string>();
 }

@@ -36,15 +36,15 @@ export class AuthorizedUserLayoutComponent {
 
   public readonly isMobile$ = this.handset$.pipe(
     withLatestFrom(this.handsetLandscape$),
-    map(([handset, handsetLandscape]) => !!(handset.matches && !handsetLandscape.matches))
+    map(([handset, handsetLandscape]) => (handset.matches && !handsetLandscape.matches))
   );
 
   public opened!: boolean;
 
-  public closeDrawerOnTouch(sidenav: MatDrawer) {
+  public closeDrawerOnTouch(matDrawer: MatDrawer) {
     this.isMobile$.pipe(take(1)).subscribe((isMobile$) => {
       if (isMobile$) {
-        sidenav.close();
+        matDrawer.close();
       }
     });
   }

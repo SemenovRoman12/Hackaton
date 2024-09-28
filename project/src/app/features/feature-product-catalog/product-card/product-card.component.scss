@@ -1,5 +1,35 @@
+.card {
+  height: 100%;
+  display: flex;
+  &__title {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
 .card-content-wrapper {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.product-descr {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.product-price {
+  align-self: flex-end;
+  margin-top: auto;
+}
+
+.product-actions {
+  flex-grow: 1;
 }

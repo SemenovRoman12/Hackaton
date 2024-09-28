@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Output} from '@angular/core';
+import {ChangeDetectionStrategy, Component, output,} from '@angular/core';
 import {MatToolbar} from "@angular/material/toolbar";
-import {MatIconButton} from "@angular/material/button";
+import {MatIconButton, MatMiniFabButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 
 @Component({
@@ -9,14 +9,15 @@ import {MatIcon} from "@angular/material/icon";
   imports: [
     MatToolbar,
     MatIconButton,
-    MatIcon
+    MatIcon,
+    MatMiniFabButton
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-  @Output() drawerToggle = new EventEmitter();
+  public drawerToggle = output();
 
   public onToggleDrawer() {
     this.drawerToggle.emit();
