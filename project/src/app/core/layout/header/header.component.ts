@@ -1,6 +1,6 @@
 import {ChangeDetectionStrategy, Component, output,} from '@angular/core';
 import {MatToolbar} from "@angular/material/toolbar";
-import {MatIconButton, MatMiniFabButton} from "@angular/material/button";
+import {MatMiniFabButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 
 @Component({
@@ -8,7 +8,6 @@ import {MatIcon} from "@angular/material/icon";
   standalone: true,
   imports: [
     MatToolbar,
-    MatIconButton,
     MatIcon,
     MatMiniFabButton
   ],

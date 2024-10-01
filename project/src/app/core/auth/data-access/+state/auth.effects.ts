@@ -3,9 +3,11 @@ import {inject} from "@angular/core";
 import {ApiService} from "@core/http/api.service";
 import {LocalStorageTokenService} from "@core/auth/data-access/services/local-storage-token.service";
 import {AuthActions} from "@core/auth/data-access/+state/auth.actions";
-import {catchError, concatMap, map, of, switchMap, tap, withLatestFrom} from "rxjs";
+import {catchError, concatMap, EMPTY, map, of, switchMap, tap, withLatestFrom} from "rxjs";
 import {NewUser, RegisterResponse, SignAuthResponse, SignAuthUser} from "@core/auth/data-access/models/sign.auth.model";
 import {Router} from "@angular/router";
+import {Store} from "@ngrx/store";
+import {selectAuthStatus} from "@core/auth/data-access/+state/auth.selectors";
 
 export const registerEffect$ = createEffect(
   () => {
@@ -71,6 +73,29 @@ export const loginSuccessEffect$ = createEffect(
       })
     );
   }, {functional: true, dispatch: false}
+);
+
+export const getUserEffect$ = createEffect(
+  () => {
+    const actions$ = inject(Actions);
+    const localStorageTokenService = inject(LocalStorageTokenService);
+    const store = inject(Store);
+
+    return actions$.pipe(
+      ofType(AuthActions.getUser),
+      withLatestFrom(store.select(selectAuthStatus)),
+      switchMap(([, authStatus]) => {
+        console.log(localStorageTokenService.getItem(), authStatus)
+        if(localStorageTokenService.getItem()) {
+          console.log('true')
+          return of(AuthActions.getUserSuccess()).pipe(catchError((error) => of(AuthActions.getUserFailure({error}))))
+        } else {
+            console.log('false')
+            return of();
+        }
+      })
+    );
+  }, {functional: true}
 );
 
 export const logoutEffect$ = createEffect(

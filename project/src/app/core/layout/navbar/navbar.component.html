@@ -8,6 +8,9 @@
       <mat-icon matListItemIcon>notes</mat-icon>
       <span>Каталог</span>
     </mat-list-item>
+    @if (!!isAuth()) {
+
+    }
     <mat-list-item class="nav-list__item" (click)="onLogout()">
       <mat-icon matListItemIcon>logout</mat-icon>
       <span>Выход</span>
