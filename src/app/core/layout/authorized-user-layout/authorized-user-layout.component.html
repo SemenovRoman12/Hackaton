@@ -1,0 +1,23 @@
+<div class="wrapper">
+  <div class="content">
+    <app-header (drawerToggle)="drawer.toggle()"></app-header>
+
+    <mat-drawer-container class="drawer-container">
+      <mat-drawer
+        #drawer [mode]="(isMobile$ | ngrxPush) ? 'over' : 'side'"
+        [(opened)]="opened"
+        class="drawer"
+      >
+        @if (opened) {
+          <app-navbar (click)="closeDrawerOnTouch(drawer)"></app-navbar>
+        }
+      </mat-drawer>
+
+      <mat-drawer-content class="drawer-content">
+        <router-outlet></router-outlet>
+      </mat-drawer-content>
+    </mat-drawer-container>
+
+    <app-footer class="footer"></app-footer>
+  </div>
+</div>

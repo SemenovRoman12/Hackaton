@@ -1,0 +1,19 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title class="card__title">
+      {{ product().name }}
+    </mat-card-title>
+  </mat-card-header>
+
+  <mat-card-content class="card-content">
+    <div class="card-content-wrapper">
+      <span class="product-descr">{{product().description}}</span>
+      <span class="product-price">RUB {{product().price | round}}</span>
+    </div>
+  </mat-card-content>
+  @if (isAuthenticated()) {
+    <mat-card-actions class="product-actions">
+      <button mat-button>Добавить в корзину</button>
+    </mat-card-actions>
+  }
+</mat-card>

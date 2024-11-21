@@ -1,0 +1,16 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  min-height: 100vh;
+}
+
+.btn-wrapper {
+  display: flex;
+  gap: 30px;
+  margin: 0 auto 20px;
+}
+
+.footer {
+  margin-top: auto;
+}

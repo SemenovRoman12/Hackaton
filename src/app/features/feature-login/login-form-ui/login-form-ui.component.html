@@ -1,0 +1,30 @@
+<app-form-ui [title]="title">
+  <form
+    [formGroup]="loginForm"
+    (ngSubmit)="onLogin()"
+    class="auth-form"
+  >
+    <mat-form-field appearance="outline">
+      <mat-label>Электронная почта:</mat-label>
+      <input
+        matInput
+        formControlName="email"
+      >
+      <mat-error>Введите почту</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Пароль:</mat-label>
+      <input
+        matInput
+        type="password"
+        formControlName="password"
+      >
+      <mat-error>Введите пароль</mat-error>
+    </mat-form-field>
+    <button
+      mat-fab
+      extended
+      [disabled]="loginForm.invalid"
+    >Войти</button>
+  </form>
+</app-form-ui>
