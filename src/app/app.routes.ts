@@ -16,10 +16,6 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: 'catalog',
-        loadComponent: () => import('@features/feature-product-catalog/product-catalog-container/product-catalog-container.component').then(c => c.ProductCatalogContainerComponent)
-      },
-      {
         path: 'my-servers',
         loadComponent: () => import('@features/feature-servers-catalog/feature-my-servers/my-servers-container/my-servers-container.component').then(c => c.MyServersContainerComponent)
       },
