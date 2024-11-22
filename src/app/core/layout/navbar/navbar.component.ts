@@ -3,6 +3,7 @@ import {MatListItem, MatListItemIcon, MatNavList} from "@angular/material/list";
 import {MatIcon} from "@angular/material/icon";
 import {AuthFacadeService} from "@core/auth/data-access/auth.facade.service";
 import {RouterLink} from "@angular/router";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-navbar',
@@ -12,7 +13,8 @@ import {RouterLink} from "@angular/router";
     MatListItem,
     MatIcon,
     RouterLink,
-    MatListItemIcon
+    MatListItemIcon,
+    MatButton
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'

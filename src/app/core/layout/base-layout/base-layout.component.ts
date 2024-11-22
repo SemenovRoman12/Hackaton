@@ -1,35 +1,30 @@
-import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FooterComponent} from "@core/layout/footer/footer.component";
-import {RouterOutlet} from "@angular/router";
 import {HeaderComponent} from "@core/layout/header/header.component";
-import {MatDrawer, MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
+import {MatDrawer, MatDrawerContainer, MatDrawerContent} from "@angular/material/sidenav";
 import {NavbarComponent} from "@core/layout/navbar/navbar.component";
+import {PushPipe} from "@ngrx/component";
+import {RouterOutlet} from "@angular/router";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {map, take, withLatestFrom} from "rxjs";
-import {AsyncPipe} from "@angular/common";
-import {PushPipe} from "@ngrx/component";
-import {MatIcon} from "@angular/material/icon";
-import {MatIconButton} from "@angular/material/button";
 
 @Component({
-  selector: 'app-authorized-user-layout',
+  selector: 'app-base-layout',
   standalone: true,
-  imports: [
-    FooterComponent,
-    RouterOutlet,
-    HeaderComponent,
-    MatSidenavModule,
-    NavbarComponent,
-    AsyncPipe,
-    PushPipe,
-    MatIcon,
-    MatIconButton
-  ],
-  templateUrl: './authorized-user-layout.component.html',
-  styleUrl: './authorized-user-layout.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [
+        FooterComponent,
+        HeaderComponent,
+        MatDrawer,
+        MatDrawerContainer,
+        MatDrawerContent,
+        NavbarComponent,
+        PushPipe,
+        RouterOutlet
+    ],
+  templateUrl: './base-layout.component.html',
+  styleUrl: './base-layout.component.scss',
 })
-export class AuthorizedUserLayoutComponent {
+export class BaseLayoutComponent {
   public readonly breakpointObserver = inject(BreakpointObserver);
   private readonly handset$ = this.breakpointObserver.observe(Breakpoints.Handset);
   private readonly handsetLandscape$ = this.breakpointObserver.observe(Breakpoints.HandsetLandscape);

@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import {authGuard} from "@core/auth/data-access/services/auth.guard";
-import {AuthorizedUserLayoutComponent} from "@core/layout/authorized-user-layout/authorized-user-layout.component";
+import { authGuard } from "@core/auth/data-access/services/auth.guard";
+import { BaseLayoutComponent } from "@core/layout/base-layout/base-layout.component";
 
 const layoutAgnosticComponents = [
   {
@@ -12,24 +12,25 @@ const layoutAgnosticComponents = [
 export const routes: Routes = [
   {
     path: '',
-    component: AuthorizedUserLayoutComponent,
-    canActivate: [authGuard],
+    component: BaseLayoutComponent,
     children: [
       {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'home',
+      },
+      {
         path: 'my-servers',
-        loadComponent: () => import('@features/feature-servers-catalog/feature-my-servers/my-servers-container/my-servers-container.component').then(c => c.MyServersContainerComponent)
+        loadComponent: () => import('@features/feature-servers-catalog/feature-my-servers/my-servers-container/my-servers-container.component').then(c => c.MyServersContainerComponent),
+        canActivate: [authGuard],
       },
       {
         path: 'available-servers',
-        loadComponent: () => import('@features/feature-servers-catalog/feature-available-servers/available-servers-container/available-servers-container.component').then(c => c.AvailableServersContainerComponent)
+        loadComponent: () => import('@features/feature-servers-catalog/feature-available-servers/available-servers-container/available-servers-container.component').then(c => c.AvailableServersContainerComponent),
+        canActivate: [authGuard],
       },
       ...layoutAgnosticComponents,
     ],
-  },
-  {
-    path: 'guest',
-    loadComponent: () => import('@core/layout/unauthorized-user-layout/unauthorized-user-layout.component').then(c => c.UnauthorizedUserLayoutComponent),
-    children: [...layoutAgnosticComponents],
   },
   {
     path: 'signup',
@@ -39,4 +40,8 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () => import('@features/feature-login/login-container/login-container.component').then(c => c.LoginContainerComponent),
   },
+  {
+    path: '**',
+    redirectTo: 'home',
+  }
 ];
