@@ -20,4 +20,22 @@
   border-radius: 15px;
 }
 
+.detail {
+  background-color: #4CAF50 !important;
+  color: white !important;
+  font-weight: 500;
+  border-radius: 4px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.detail:hover {
+  background-color: #45A049;
+}
+
+.detail:disabled {
+  background-color: #A5D6A7;
+  color: rgba(255, 255, 255, 0.7);
+}
+
 

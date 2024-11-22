@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {
   AvailableServersComponent
-} from "@features/feature-servers-catalog/feature-available-servers/available-servers/available-servers.component";
+} from "@features/feature-servers-catalog/available-servers/available-servers/available-servers.component";
 
 @Component({
   selector: 'app-available-servers-container',

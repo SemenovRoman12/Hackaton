@@ -21,12 +21,17 @@ export const routes: Routes = [
       },
       {
         path: 'my-servers',
-        loadComponent: () => import('@features/feature-servers-catalog/feature-my-servers/my-servers-container/my-servers-container.component').then(c => c.MyServersContainerComponent),
+        loadComponent: () => import('@features/feature-servers-catalog/my-servers/my-servers-container/my-servers-container.component').then(c => c.MyServersContainerComponent),
+        canActivate: [authGuard],
+      },
+      {
+        path: 'my-servers/test',
+        loadComponent: () => import('@features/feature-servers-catalog/my-servers/server-detail/server-detail.component').then(c => c.ServerDetailComponent),
         canActivate: [authGuard],
       },
       {
         path: 'available-servers',
-        loadComponent: () => import('@features/feature-servers-catalog/feature-available-servers/available-servers-container/available-servers-container.component').then(c => c.AvailableServersContainerComponent),
+        loadComponent: () => import('@features/feature-servers-catalog/available-servers/available-servers-container/available-servers-container.component').then(c => c.AvailableServersContainerComponent),
         canActivate: [authGuard],
       },
       ...layoutAgnosticComponents,

@@ -1,0 +1,18 @@
+
+.monitoring-card {
+  max-width: 400px;
+}
+ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.monitoring-card__characteristics {
+  display: flex;
+  justify-content: space-between;
+}
+
+.value-name {
+  color: #777777;
+  font-size: 14px;
+}

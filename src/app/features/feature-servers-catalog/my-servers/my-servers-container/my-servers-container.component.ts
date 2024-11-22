@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MyServersComponent} from "@features/feature-servers-catalog/feature-my-servers/my-servers/my-servers.component";
+import {MyServersComponent} from "@features/feature-servers-catalog/my-servers/my-servers/my-servers.component";
 
 @Component({
   selector: 'app-my-servers-container',
