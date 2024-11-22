@@ -1,2 +1,18 @@
-<p>server-card works!</p>
-
+@if(isMy()) {
+  <mat-card class="server-card">
+    <mat-card-title class="server-card__title">Title</mat-card-title>
+    <mat-card-content class="server-card__description">Description</mat-card-content>
+    <mat-card-actions class="card-btns-wrapper">
+      <button mat-raised-button color="primary">Подключиться</button>
+      <button mat-raised-button color="warn">Вернуть</button>
+    </mat-card-actions>
+  </mat-card>
+} @else {
+  <mat-card class="server-card">
+    <mat-card-title>Title</mat-card-title>
+    <mat-card-content class="server-card__description">Description</mat-card-content>
+    <mat-card-actions class="card-btns-wrapper">
+      <button mat-raised-button color="primary">Арендовать</button>
+    </mat-card-actions>
+  </mat-card>
+}

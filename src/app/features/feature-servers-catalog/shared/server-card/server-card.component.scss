@@ -1,0 +1,23 @@
+.server-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  padding: 16px;
+}
+
+.server-card__description,
+.card-btns-wrapper {
+  padding: 0;
+}
+
+.card-btns-wrapper {
+  display: flex;
+  gap: 16px;
+}
+
+.card-btns-wrapper button {
+  border-radius: 15px;
+}
+
+
