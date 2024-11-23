@@ -4,7 +4,13 @@ import {ApiService} from "@core/http/api.service";
 import {LocalStorageTokenService} from "@core/auth/data-access/services/local-storage-token.service";
 import {AuthActions} from "@core/auth/data-access/+state/auth.actions";
 import {catchError, concatMap, EMPTY, map, of, switchMap, tap, withLatestFrom} from "rxjs";
-import {NewUser, RegisterResponse, SignAuthResponse, SignAuthUser} from "@core/auth/data-access/models/sign.auth.model";
+import {
+  AuthUser,
+  NewUser,
+  RegisterResponse,
+  SignAuthResponse,
+  SignAuthUser
+} from "@core/auth/data-access/models/sign.auth.model";
 import {Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {selectAuthStatus} from "@core/auth/data-access/+state/auth.selectors";
@@ -50,9 +56,8 @@ export const loginEffect$ = createEffect(
     return actions$.pipe(
       ofType(AuthActions.login),
       switchMap(({userData}) => {
-        return apiService.post<SignAuthResponse, SignAuthUser>('/login', userData).pipe(
-          map((userData) => userData.data.user_token),
-          map((authToken) => AuthActions.loginSuccess({authToken})),
+        return apiService.post<AuthUser, SignAuthUser>('/auth/signin', userData).pipe(
+          map((userData) => AuthActions.loginSuccess({userData})),
           catchError((error) => of(AuthActions.loginFailure({error})))
         );
       })
@@ -60,20 +65,6 @@ export const loginEffect$ = createEffect(
   }, {functional: true}
 );
 
-export const loginSuccessEffect$ = createEffect(
-  () => {
-    const actions$ = inject(Actions);
-    const router = inject(Router);
-    const localStorageTokenService = inject(LocalStorageTokenService);
-    return actions$.pipe(
-      ofType(AuthActions.loginSuccess),
-      tap((action) => {
-        localStorageTokenService.setItem(action.authToken);
-        router.navigate(['/home']);
-      })
-    );
-  }, {functional: true, dispatch: false}
-);
 
 export const getUserEffect$ = createEffect(
   () => {

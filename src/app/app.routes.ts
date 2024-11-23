@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
-import { authGuard } from "@core/auth/data-access/services/auth.guard";
 import { BaseLayoutComponent } from "@core/layout/base-layout/base-layout.component";
+import {authGuard} from "@core/auth/data-access/services/auth.guard";
 
 const layoutAgnosticComponents = [
   {
@@ -21,13 +21,12 @@ export const routes: Routes = [
       },
       {
         path: 'my-servers',
-        loadComponent: () => import('@features/feature-servers-catalog/my-servers/my-servers-container/my-servers-container.component').then(c => c.MyServersContainerComponent),
-
+        canActivate: [authGuard],
+        loadComponent: () => import('@features/feature-servers-catalog/my-servers/my-servers/my-servers.component').then(c => c.MyServersComponent),
       },
       {
         path: 'my-servers/:id',
         loadComponent: () => import('@features/feature-servers-catalog/my-servers/server-detail/server-detail.component').then(c => c.ServerDetailComponent),
-
       },
       {
         path: 'available-servers',
@@ -36,7 +35,6 @@ export const routes: Routes = [
       {
         path: 'supports',
         loadComponent: () => import('@features/feature-supports/supports-list-container/supports-list-container.component').then(c => c.SupportsListContainerComponent),
-        // canActivate: [authGuard],
       },
       {
         path: 'supports/test',

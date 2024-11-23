@@ -1,6 +1,8 @@
-@for(server of servers(); track server.ID) {
-  <my-server-card
-    class="server-card"
-    [server]="server"
-  ></my-server-card>
-}
+<div class="server-card-list">
+  @for(server of servers(); track server.ID) {
+    <my-server-card
+      class="server-card"
+      [server]="server"
+    ></my-server-card>
+  }
+</div>

@@ -1,8 +1,13 @@
 // Registration:
 
-export interface NewUser {
-  fio: string;
+export interface AuthUser {
   email: string;
+  username: string;
+}
+
+export interface NewUser {
+  email: string;
+  username: string;
   password: string;
 }
 
@@ -15,7 +20,7 @@ export interface RegisterResponse {
 // Authorisation
 
 export interface SignAuthUser {
-  email: string;
+  username: string;
   password: string;
 }
 

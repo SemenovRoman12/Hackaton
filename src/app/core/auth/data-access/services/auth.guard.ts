@@ -1,14 +1,24 @@
 import {inject} from "@angular/core";
-import {LocalStorageTokenService} from "@core/auth/data-access/services/local-storage-token.service";
 import {Router} from "@angular/router";
+import {ApiService} from "@core/http/api.service";
+import {catchError, of} from "rxjs";
 
 export const authGuard = () => {
-  const localStorageTokenService = inject(LocalStorageTokenService);
   const router = inject(Router);
+  const apiService = inject(ApiService);
 
-  if(!localStorageTokenService.getItem()) {
-    router.navigate(['/guest/home']);
-    return false;
-  }
-  return true;
+
+
+
+  return apiService.get('servers/my').pipe(
+    catchError((error) => {
+      if (error.status === 403) {
+        console.log(error.status === 403)
+        router.navigate(['/guest/home']);
+        return of(false);
+      }
+      console.log(error.status === 403)
+      return of(true);
+    })
+  );
 };

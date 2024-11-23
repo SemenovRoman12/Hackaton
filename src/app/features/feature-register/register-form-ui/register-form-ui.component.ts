@@ -31,7 +31,7 @@ export class RegisterFormUiComponent {
   private readonly fb = inject(FormBuilder);
 
   public readonly registerForm: FormGroup<FormType<NewUser>> = this.fb.group({
-    fio: ['', Validators.required],
+    username: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
@@ -39,7 +39,7 @@ export class RegisterFormUiComponent {
   public onRegister() {
     if(this.registerForm.valid) {
       const userData: NewUser = {
-        fio: this.registerForm.value.fio as string,
+        username: this.registerForm.value.username as string,
         email: this.registerForm.value.email as string,
         password: this.registerForm.value.password as string,
       };

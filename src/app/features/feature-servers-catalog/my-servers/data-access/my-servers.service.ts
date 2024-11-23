@@ -19,4 +19,12 @@ export class MyServersService {
       (servers) => this._myServersSubject$.next(servers)
     );
   }
+
+  public getServer(id: string) {
+    return this.apiService.get<Server>(`/servers/${id}`)
+  }
+
+  public unRentServer(server: Server) {
+    this.apiService.delete<Server>(`/rent/${server.ID}`).subscribe();
+  }
 }

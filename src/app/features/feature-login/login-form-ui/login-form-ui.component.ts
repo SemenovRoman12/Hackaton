@@ -31,14 +31,14 @@ export class LoginFormUiComponent {
   public readonly title = 'Вход';
 
   public readonly loginForm: FormGroup<FormType<SignAuthUser>> = this.fb.group({
-    email: ['', [Validators.required, Validators.email],],
+    username: ['', [Validators.required],],
     password: ['', [Validators.required],],
   });
 
   public onLogin() {
     if(this.loginForm.valid) {
       const userData: SignAuthUser = {
-        email: this.loginForm.value.email as string,
+        username: this.loginForm.value.username as string,
         password: this.loginForm.value.password as string,
       };
       this.login.emit(userData);

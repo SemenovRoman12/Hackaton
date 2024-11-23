@@ -11,49 +11,45 @@
       <mat-icon matListItemIcon>home</mat-icon>
       <span>Домой</span>
     </mat-list-item>
-<!--    @if (isAuth()) {-->
-<!--      <mat-list-item class="nav-list__item" routerLink="/my-servers">-->
-<!--        <mat-icon matListItemIcon>dns</mat-icon>-->
-<!--        <span>Мои сервера</span>-->
-<!--      </mat-list-item>-->
-<!--      <mat-list-item class="nav-list__item" routerLink="/available-servers">-->
-<!--        <mat-icon matListItemIcon>clouds</mat-icon>-->
-<!--        <span>Доступные сервера</span>-->
-<!--      </mat-list-item>-->
-<!--      <mat-list-item class="nav-list__item" routerLink="/supports">-->
-<!--        <mat-icon matListItemIcon>email</mat-icon>-->
-<!--        <span>Обращения</span>-->
-<!--      </mat-list-item>-->
-<!--      <mat-list-item class="nav-list__item" (click)="onLogout()">-->
-<!--        <mat-icon matListItemIcon>logout</mat-icon>-->
-<!--        <span>Выход</span>-->
-<!--      </mat-list-item>-->
-<!--    } @else {-->
-<!--      <mat-list-item class="nav-list__item" routerLink="/login">-->
-<!--        <mat-icon matListItemIcon>login</mat-icon>-->
-<!--        <span>Войти</span>-->
-<!--      </mat-list-item>-->
-<!--      <mat-list-item class="nav-list__item"  routerLink="/signup">-->
-<!--        <mat-icon matListItemIcon>person_add</mat-icon>-->
-<!--        <span>Зарегестрироваться</span>-->
-<!--      </mat-list-item>-->
-<!--    }-->
+    @if (isAuth()) {
+      <mat-list-item class="nav-list__item" routerLink="/my-servers">
+        <mat-icon matListItemIcon>dns</mat-icon>
+        <span>Мои сервера</span>
+      </mat-list-item>
+      <mat-list-item class="nav-list__item" routerLink="/available-servers">
+        <mat-icon matListItemIcon>clouds</mat-icon>
+        <span>Доступные сервера</span>
+      </mat-list-item>
+      <mat-list-item class="nav-list__item" routerLink="/supports">
+        <mat-icon matListItemIcon>email</mat-icon>
+        <span>Обращения</span>
+      </mat-list-item>
+      <mat-list-item class="nav-list__item" (click)="onLogout()">
+        <mat-icon matListItemIcon>logout</mat-icon>
+        <span>Выход</span>
+      </mat-list-item>
+    } @else {
+      <mat-list-item class="nav-list__item" routerLink="/login">
+        <mat-icon matListItemIcon>login</mat-icon>
+        <span>Войти</span>
+      </mat-list-item>
+    }
 
-    <mat-list-item class="nav-list__item" routerLink="/my-servers">
-      <mat-icon matListItemIcon>dns</mat-icon>
-      <span>Мои сервера</span>
-    </mat-list-item>
-    <mat-list-item class="nav-list__item" routerLink="/available-servers">
-      <mat-icon matListItemIcon>clouds</mat-icon>
-      <span>Доступные сервера</span>
-    </mat-list-item>
-    <mat-list-item class="nav-list__item" routerLink="/supports">
-      <mat-icon matListItemIcon>email</mat-icon>
-      <span>Обращения</span>
-    </mat-list-item>
-    <mat-list-item class="nav-list__item" (click)="onLogout()">
-      <mat-icon matListItemIcon>logout</mat-icon>
-      <span>Выход</span>
-    </mat-list-item>
+<!--    <mat-list-item class="nav-list__item" routerLink="/my-servers">-->
+<!--      <mat-icon matListItemIcon>dns</mat-icon>-->
+<!--      <span>Мои сервера</span>-->
+<!--    </mat-list-item>-->
+<!--    <mat-list-item class="nav-list__item" routerLink="/available-servers">-->
+<!--      <mat-icon matListItemIcon>clouds</mat-icon>-->
+<!--      <span>Доступные сервера</span>-->
+<!--    </mat-list-item>-->
+<!--    <mat-list-item class="nav-list__item" routerLink="/supports">-->
+<!--      <mat-icon matListItemIcon>email</mat-icon>-->
+<!--      <span>Обращения</span>-->
+<!--    </mat-list-item>-->
+<!--    <mat-list-item class="nav-list__item" (click)="onLogout()">-->
+<!--      <mat-icon matListItemIcon>logout</mat-icon>-->
+<!--      <span>Выход</span>-->
+<!--    </mat-list-item>-->
   </div>
 </mat-nav-list>

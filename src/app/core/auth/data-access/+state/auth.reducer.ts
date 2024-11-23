@@ -1,19 +1,20 @@
 import {LoadingStatus} from "@core/data-access/loading-status.type";
 import {createFeature, createReducer, on} from "@ngrx/store";
 import {AuthActions} from "@core/auth/data-access/+state/auth.actions";
+import {AuthUser} from "@core/auth/data-access/models/sign.auth.model";
 
 export const AUTH_FEATURE_NAME = "auth";
 
 export interface AuthState {
   authStatus: LoadingStatus;
   error: Error | null;
-  authToken: string;
+  userData: AuthUser | null;
 }
 
 export const authInitialState: AuthState = {
   authStatus: 'init',
   error: null,
-  authToken: '',
+  userData: null
 };
 
 export const authFeature = createFeature({
@@ -38,10 +39,10 @@ export const authFeature = createFeature({
       ...state,
       authStatus: 'loading' as const
     })),
-    on(AuthActions.loginSuccess, (state, {authToken}) => ({
+    on(AuthActions.loginSuccess, (state, {userData}) => ({
       ...state,
       authStatus: 'loaded' as const,
-      authToken,
+      userData,
     })),
     on(AuthActions.loginFailure, (state, {error}) => ({
       ...state,

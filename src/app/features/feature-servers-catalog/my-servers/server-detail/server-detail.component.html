@@ -7,7 +7,7 @@
   <mat-card-content>
     <div class="monitoring-card__uptime">
       <div class="uptime-name value-name">Uptime</div>
-      <div class="uptime-value">5d 12h 11m 12s</div>
+      <div class="uptime-value"></div>
     </div>
 
     <mat-divider></mat-divider>
@@ -15,15 +15,15 @@
     <ul class="monitoring-card__characteristics">
       <li class="characteristics-item">
         <div class="characteristics-item__name value-name">CPU</div>
-        <div class="characteristics-item__value">55%</div>
+        <div class="characteristics-item__value">{{server()?.CPU}}</div>
       </li>
       <li class="characteristics-item">
         <div class="characteristics-item__name value-name">Memory</div>
-        <div class="characteristics-item__value">45%</div>
+        <div class="characteristics-item__value">{{server()?.Memory}}</div>
       </li>
       <li class="characteristics-item">
-        <div class="characteristics-item__name value-name">Ram</div>
-        <div class="characteristics-item__value">12%</div>
+        <div class="characteristics-item__name value-name">Disk</div>
+        <div class="characteristics-item__value">{{server()?.Disk}}</div>
       </li>
     </ul>
 
@@ -31,7 +31,7 @@
 
     <mat-card-actions class="card-btns-wrapper">
       <button mat-raised-button color="primary">Подключиться</button>
-      <button mat-raised-button color="warn">Вернуть</button>
+      <button mat-raised-button color="warn" (click)="onUnRentServer()">Вернуть</button>
       <app-support-add-button></app-support-add-button>
     </mat-card-actions>
   </mat-card-content>
