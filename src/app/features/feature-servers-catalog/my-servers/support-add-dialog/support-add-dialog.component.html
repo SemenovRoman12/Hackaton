@@ -1,0 +1,32 @@
+<div class="support-add-wrapper">
+  <h1 class="support-add-title" mat-dialog-title>Обращение</h1>
+  <form class="support-add-form"
+    [formGroup]="addSupportForm"
+  >
+    <mat-form-field>
+      <mat-label>Название</mat-label>
+      <input matInput formControlName="title">
+      <mat-error>Поле обязательно</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Описание</mat-label>
+      <input matInput formControlName="description">
+      <mat-error>Поле обязательно</mat-error>
+    </mat-form-field>
+  </form>
+  <div class="form__btns">
+    <button
+      mat-dialog-close
+      mat-raised-button
+      color="warn"
+    >
+      Закрыть
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onAddSupport()"
+      [disabled]="addSupportForm.invalid"
+    >Отправить</button>
+  </div>
+</div>

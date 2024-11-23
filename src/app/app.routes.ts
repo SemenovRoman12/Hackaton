@@ -34,6 +34,16 @@ export const routes: Routes = [
         loadComponent: () => import('@features/feature-servers-catalog/available-servers/available-servers-container/available-servers-container.component').then(c => c.AvailableServersContainerComponent),
         canActivate: [authGuard],
       },
+      {
+        path: 'supports',
+        loadComponent: () => import('@features/feature-supports/supports-list-container/supports-list-container.component').then(c => c.SupportsListContainerComponent),
+        canActivate: [authGuard],
+      },
+      {
+        path: 'supports/test',
+        loadComponent: () => import('@features/feature-supports/supports-list-container/supports-list-container.component').then(c => c.SupportsListContainerComponent),
+        canActivate: [authGuard],
+      },
       ...layoutAgnosticComponents,
     ],
   },

@@ -85,7 +85,6 @@ export const getUserEffect$ = createEffect(
       ofType(AuthActions.getUser),
       withLatestFrom(store.select(selectAuthStatus)),
       switchMap(([, authStatus]) => {
-        console.log(localStorageTokenService.getItem(), authStatus)
         if(localStorageTokenService.getItem()) {
           return of(AuthActions.getUserSuccess()).pipe(catchError((error) => of(AuthActions.getUserFailure({error}))))
         } else {

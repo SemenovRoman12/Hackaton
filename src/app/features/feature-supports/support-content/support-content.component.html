@@ -1,0 +1,20 @@
+<mat-card class="support-content">
+  <h1 mat-dialog-title class="support-content__title">Заголовок</h1>
+  <mat-card-content class="support-content__info">
+    <div class="info__description">
+      Описание обращения
+    </div>
+    <div *ngIf="true" class="info__solution">
+      Решение:
+    </div>
+  </mat-card-content>
+  <mat-card-actions class="info__btns-wrapper">
+    <button
+      mat-dialog-close
+      mat-raised-button
+      color="warn"
+    >
+      Закрыть
+    </button>
+  </mat-card-actions>
+</mat-card>

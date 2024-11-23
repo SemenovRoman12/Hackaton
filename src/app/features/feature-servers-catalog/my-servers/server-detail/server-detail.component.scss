@@ -1,6 +1,7 @@
 
 .monitoring-card {
-  max-width: 400px;
+  margin: 0 auto;
+  max-width: 500px;
 }
 ul {
   padding: 0;
@@ -9,10 +10,30 @@ ul {
 
 .monitoring-card__characteristics {
   display: flex;
-  justify-content: space-between;
+  gap: 40px;
+}
+
+.monitoring-card__free-space,
+.monitoring-card__uptime,
+.card-btns-wrapper {
+  margin: 10px 0;
 }
 
 .value-name {
   color: #777777;
   font-size: 14px;
 }
+
+.card-btns-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 0;
+  margin: 15px 0;
+}
+
+.card-btns-wrapper button {
+  border-radius: 15px;
+}
+
+
