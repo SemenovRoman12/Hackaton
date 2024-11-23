@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
-import {MatCard, MatCardContent} from "@angular/material/card";
+import {Component, input} from '@angular/core';
+import {MatCard, MatCardActions, MatCardContent, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
+import {MatButton} from "@angular/material/button";
+import {RouterLink} from "@angular/router";
+import {Server} from "@features/feature-servers-catalog/models/server.model";
 
 @Component({
   selector: 'app-support-card',
@@ -8,11 +11,14 @@ import {MatIcon} from "@angular/material/icon";
     imports: [
         MatCard,
         MatCardContent,
-        MatIcon
+        MatIcon,
+        MatButton,
+        MatCardActions,
+        MatCardTitle,
+        RouterLink
     ],
   templateUrl: './support-card.component.html',
   styleUrl: './support-card.component.scss'
 })
 export class SupportCardComponent {
-
 }

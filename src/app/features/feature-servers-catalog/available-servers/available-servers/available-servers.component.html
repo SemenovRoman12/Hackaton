@@ -1,1 +1,5 @@
-<app-server-card [isMy]="false"></app-server-card>
+<div *ngFor="let server of servers()">
+  <available-server-card
+    [server]="server"
+  ></available-server-card>
+</div>

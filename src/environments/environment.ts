@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: 'http://lifestealer86.ru/api-shop',
+  apiUrl: 'http://localhost:80',
   production: true,
 };

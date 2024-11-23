@@ -1,1 +1,6 @@
-<app-server-card [isMy]="true"></app-server-card>
+@for(server of servers(); track server.id) {
+  <my-server-card
+    class="server-card"
+    [server]="server"
+  ></my-server-card>
+}

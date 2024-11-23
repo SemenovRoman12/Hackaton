@@ -9,13 +9,13 @@ export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
   const token = localStorageTokenService.getItem();
   const router = inject(Router);
 
-  if(token) {
-    req = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${token}`
-      },
-    });
-  }
+  // if(token) {
+  //   req = req.clone({
+  //     setHeaders: {
+  //       Authorization: `Bearer ${token}`
+  //     },
+  //   });
+  // }
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {

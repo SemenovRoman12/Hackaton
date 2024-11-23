@@ -19,14 +19,11 @@ import {MatButton} from "@angular/material/button";
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent implements OnInit{
+export class NavbarComponent {
   private readonly authFacade = inject(AuthFacadeService);
   isAuth = this.authFacade.isAuthenticated;
 
   public onLogout() {
     this.authFacade.logout();
-  }
-  ngOnInit() {
-    console.log(this.isAuth())
   }
 }

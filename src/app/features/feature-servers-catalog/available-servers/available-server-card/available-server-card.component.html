@@ -1,0 +1,21 @@
+<mat-card class="server-card">
+  <mat-card-title class="server-card__title">{{ server().Title }}</mat-card-title>
+  <ul class="card__characteristics">
+    <li class="characteristics-item">
+      <div class="characteristics-item__name value-name">CPU</div>
+      <div class="characteristics-item__value">{{server().CPU}}</div>
+    </li>
+    <li class="characteristics-item">
+      <div class="characteristics-item__name value-name">Memory</div>
+      <div class="characteristics-item__value">{{server().Memory}}</div>
+    </li>
+    <li class="characteristics-item">
+      <div class="characteristics-item__name value-name">Disk</div>
+      <div class="characteristics-item__value">{{server().Disk}}</div>
+    </li>
+  </ul>
+  <mat-card-actions class="card-btns-wrapper">
+    <button mat-raised-button color="accent">Арендовать</button>
+  </mat-card-actions>
+</mat-card>
+
