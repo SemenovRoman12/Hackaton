@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input, input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, input, OnInit, output} from '@angular/core';
 import {MatCard, MatCardActions, MatCardContent, MatCardTitle} from "@angular/material/card";
 import {MatButton} from "@angular/material/button";
 import {RouterLink} from "@angular/router";
@@ -21,4 +21,9 @@ import {Server} from "@features/feature-servers-catalog/models/server.model";
 })
 export class AvailableServerCardComponent {
   public server = input.required<Server>();
+  public serverToRent = output<Server>();
+
+  public serverRentEvent() {
+    this.serverToRent.emit(this.server());
+  }
 }

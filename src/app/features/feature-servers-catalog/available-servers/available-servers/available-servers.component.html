@@ -1,5 +1,6 @@
 <div *ngFor="let server of servers()">
   <available-server-card
     [server]="server"
+    (serverToRent)="onRentServer($event)"
   ></available-server-card>
 </div>

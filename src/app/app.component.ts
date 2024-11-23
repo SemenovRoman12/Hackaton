@@ -15,6 +15,6 @@ export class AppComponent implements OnInit {
   private readonly store = inject(Store);
 
   ngOnInit() {
-    this.store.dispatch(AuthActions.getUser())
+    // this.store.dispatch(AuthActions.getUser())
   }
 }

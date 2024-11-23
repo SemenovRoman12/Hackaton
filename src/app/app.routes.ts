@@ -22,27 +22,25 @@ export const routes: Routes = [
       {
         path: 'my-servers',
         loadComponent: () => import('@features/feature-servers-catalog/my-servers/my-servers-container/my-servers-container.component').then(c => c.MyServersContainerComponent),
-        canActivate: [authGuard],
+
       },
       {
-        path: 'my-servers/test',
+        path: 'my-servers/:id',
         loadComponent: () => import('@features/feature-servers-catalog/my-servers/server-detail/server-detail.component').then(c => c.ServerDetailComponent),
-        canActivate: [authGuard],
+
       },
       {
         path: 'available-servers',
         loadComponent: () => import('@features/feature-servers-catalog/available-servers/available-servers/available-servers.component').then(c => c.AvailableServersComponent),
-        canActivate: [authGuard],
       },
       {
         path: 'supports',
         loadComponent: () => import('@features/feature-supports/supports-list-container/supports-list-container.component').then(c => c.SupportsListContainerComponent),
-        canActivate: [authGuard],
+        // canActivate: [authGuard],
       },
       {
         path: 'supports/test',
         loadComponent: () => import('@features/feature-supports/supports-list-container/supports-list-container.component').then(c => c.SupportsListContainerComponent),
-        canActivate: [authGuard],
       },
       ...layoutAgnosticComponents,
     ],

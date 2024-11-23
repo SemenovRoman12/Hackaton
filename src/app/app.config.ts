@@ -8,15 +8,14 @@ import {provideRouterStore } from '@ngrx/router-store';
 import {API_URL} from "@core/http/api-url.token";
 import {environment} from "../environments/environment";
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import {provideHttpClient, withInterceptors} from "@angular/common/http";
-import {tokenInterceptor} from "@core/auth/data-access/services/token.interceptor";
+import {provideHttpClient} from "@angular/common/http";
 import { authFeature } from "@core/auth/data-access/+state/auth.reducer";
 import * as authEffect from "@core/auth/data-access/+state/auth.effects";
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideHttpClient(withInterceptors([tokenInterceptor])),
+    provideHttpClient(),
     provideRouter(routes),
     provideStore({
       [authFeature.name]: authFeature.reducer,

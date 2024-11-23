@@ -18,7 +18,8 @@ export class ApiService {
   }
 
   public post<T, D>(url: string, data?: D): Observable<T> {
-    return this.http.post<T>(`${this.apiUrl}${url}`, JSON.stringify(data), {
+    console.log(`${this.apiUrl}${url}`)
+    return this.http.get<T>(`${this.apiUrl}${url}`,  {
       headers: this.headers,
     });
   }

@@ -15,7 +15,11 @@
     </li>
   </ul>
   <mat-card-actions class="card-btns-wrapper">
-    <button mat-raised-button color="accent">Арендовать</button>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="serverRentEvent()"
+    >Арендовать</button>
   </mat-card-actions>
 </mat-card>
 

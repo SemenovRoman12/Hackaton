@@ -1,5 +1,5 @@
 export interface Server {
-  id: string;          // Уникальный идентификатор (UUID)
+  ID: string;          // Уникальный идентификатор (UUID)
   Title: string;       // Название сервера
   CPU: number;         // Количество ядер процессора
   Memory: number;      // Объем памяти в МБ
