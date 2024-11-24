@@ -1,0 +1,28 @@
+:host {
+  display: block;
+  padding: 30px;
+}
+
+.support-add-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #4a4a4a;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.support-add-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.support-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form__btns {
+  display: flex;
+  gap: 20px;
+}

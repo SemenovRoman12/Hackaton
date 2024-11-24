@@ -1,0 +1,25 @@
+<div class="support-add-wrapper">
+  <div class="title-wrapper">
+    <h1 class="support-add-title" mat-dialog-title>Данные от сервера</h1>
+    <p class="title-warning">!!Пожалуйста запомните логин и пароль, восстановление невозможно</p>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <ul class="info-list">
+    <li class="list-item">Login: {{data.Login}}</li>
+    <li class="list-item">Password: {{data.Password}}</li>
+  </ul>
+
+  <mat-divider></mat-divider>
+
+  <div class="form__btns">
+    <button
+      mat-dialog-close
+      mat-raised-button
+      color="warn"
+    >
+      Закрыть
+    </button>
+  </div>
+</div>

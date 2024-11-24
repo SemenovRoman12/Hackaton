@@ -1,0 +1,27 @@
+<div class="support-add-wrapper">
+  <h1 class="support-add-title" mat-dialog-title>Обращение</h1>
+  <form class="support-add-form"
+        [formGroup]="rentForm"
+  >
+    <mat-form-field>
+      <mat-label>Количество дней</mat-label>
+      <input matInput formControlName="days">
+      <mat-error>Поле обязательно</mat-error>
+    </mat-form-field>
+  </form>
+  <div class="form__btns">
+    <button
+      mat-dialog-close
+      mat-raised-button
+      color="warn"
+    >
+      Закрыть
+    </button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onRent()"
+      [disabled]="rentForm.invalid"
+    >Отправить</button>
+  </div>
+</div>

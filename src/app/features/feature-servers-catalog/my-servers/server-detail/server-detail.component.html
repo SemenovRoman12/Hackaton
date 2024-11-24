@@ -1,36 +1,46 @@
 <mat-card class="monitoring-card">
 
   <mat-card-header>
-    <mat-card-title>Мониторинг</mat-card-title>
+    <mat-card-title>{{server()?.Title}}</mat-card-title>
   </mat-card-header>
 
+
   <mat-card-content>
-    <div class="monitoring-card__uptime">
-      <div class="uptime-name value-name">Uptime</div>
-      <div class="uptime-value"></div>
-    </div>
+
+
+    <ul class="monitoring-card__characteristics">
+      <li class="characteristics-item">
+        <div class="characteristics-item__name value-name">Address</div>
+        <div class="characteristics-item__value">{{server()?.IP}}</div>
+      </li>
+    </ul>
 
     <mat-divider></mat-divider>
 
     <ul class="monitoring-card__characteristics">
       <li class="characteristics-item">
         <div class="characteristics-item__name value-name">CPU</div>
-        <div class="characteristics-item__value">{{server()?.CPU}}</div>
+        <div class="characteristics-item__value">{{server()?.CPU + " core"}}</div>
       </li>
       <li class="characteristics-item">
         <div class="characteristics-item__name value-name">Memory</div>
-        <div class="characteristics-item__value">{{server()?.Memory}}</div>
+        <div class="characteristics-item__value">{{server()?.Memory + " mb"}}</div>
       </li>
+    </ul>
+
+    <mat-divider></mat-divider>
+
+    <ul class="monitoring-card__characteristics">
       <li class="characteristics-item">
         <div class="characteristics-item__name value-name">Disk</div>
-        <div class="characteristics-item__value">{{server()?.Disk}}</div>
+        <div class="characteristics-item__value">{{server()?.Disk + " mb"}}</div>
       </li>
     </ul>
 
     <mat-divider></mat-divider>
 
     <mat-card-actions class="card-btns-wrapper">
-      <button mat-raised-button color="primary">Подключиться</button>
+      <button mat-raised-button color="primary">Переустановить</button>
       <button mat-raised-button color="warn" (click)="onUnRentServer()">Вернуть</button>
       <app-support-add-button></app-support-add-button>
     </mat-card-actions>

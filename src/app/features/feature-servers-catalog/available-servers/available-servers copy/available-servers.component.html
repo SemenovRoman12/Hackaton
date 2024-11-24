@@ -1,0 +1,9 @@
+<div class="server-card-list">
+  @for(server of servers(); track server.ID) {
+    <available-server-card
+      class="server-card"
+      [server]="server"
+      (serverToRent)="onRentServer($event)"
+    ></available-server-card>
+  }
+</div>

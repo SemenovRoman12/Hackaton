@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {BehaviorSubject, catchError, pipe, throwError} from "rxjs";
+import {BehaviorSubject, catchError, pipe, throwError, Observable} from "rxjs";
 import {Server} from "@features/feature-servers-catalog/models/server.model";
 import {ApiService} from "@core/http/api.service";
 import {HttpEventType} from "@angular/common/http";
@@ -19,8 +19,8 @@ export class AvailableServerService {
     );
   }
 
-  public rentServer(server: Server) {
-    this.apiService.post<null, any>(`/rent/${server.ID}`).subscribe();
+  public rentServer(server: Server, days: number): Observable<any> {
+    return this.apiService.post<null, any>(`/rent/${server.ID}`, {booking_days: days});
   }
 }
 // fetch('http://localhost:80/rent/3f45b109-0e26-43b0-abcb-52b216b69a1e', {

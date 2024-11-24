@@ -27,9 +27,8 @@ export class AvailableServersComponent implements OnInit{
   private readonly router = inject(Router);
 
   public onRentServer(server: Server): void {
-    this.availableServersService.rentServer(server);
+    this.availableServersService.rentServer(server, 0);
     this.router.navigate([`my-servers/${server.ID}`]);
-    console.log(server);
   }
 
   ngOnInit() {
