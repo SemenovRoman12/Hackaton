@@ -17,6 +17,6 @@ export class RegisterContainerComponent {
   private readonly authFacade = inject(AuthFacadeService);
 
   public onRegister(userData: NewUser) {
-    this.authFacade.register(userData)
+    // this.authFacade.register(userData)
   };
 }

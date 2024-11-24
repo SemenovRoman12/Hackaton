@@ -3,62 +3,68 @@ import {inject} from "@angular/core";
 import {ApiService} from "@core/http/api.service";
 import {LocalStorageTokenService} from "@core/auth/data-access/services/local-storage-token.service";
 import {AuthActions} from "@core/auth/data-access/+state/auth.actions";
-import {catchError, concatMap, EMPTY, map, of, switchMap, tap, withLatestFrom} from "rxjs";
+import {catchError, concatMap, map, of, switchMap, tap, withLatestFrom} from "rxjs";
 import {
-  AuthUser,
   NewUser,
-  RegisterResponse,
-  SignAuthResponse,
   SignAuthUser
 } from "@core/auth/data-access/models/sign.auth.model";
 import {Router} from "@angular/router";
 import {Store} from "@ngrx/store";
 import {selectAuthStatus} from "@core/auth/data-access/+state/auth.selectors";
 
-export const registerEffect$ = createEffect(
-  () => {
-    const actions$ = inject(Actions);
-    const apiService = inject(ApiService);
-    return actions$.pipe(
-      ofType(AuthActions.register),
-      switchMap(({userData}) => {
-          return apiService.post<RegisterResponse, NewUser>('/signup', userData).pipe(
-            map((response) => response.data.user_token),
-            map((authToken) => AuthActions.registerSuccess({authToken})),
-            catchError((error) => of(AuthActions.registerFailure({error})))
-          );
-        }
-      )
-    );
-  }, {functional: true}
-);
+// export const registerEffect$ = createEffect(
+//   () => {
+//     const actions$ = inject(Actions);
+//     const apiService = inject(ApiService);
+//     return actions$.pipe(
+//       ofType(AuthActions.register),
+//       switchMap(({userData}) => {
+//           return apiService.post<RegisterResponse, NewUser>('/signup', userData).pipe(
+//             map((response) => response.data.user_token),
+//             map((authToken) => AuthActions.registerSuccess({authToken})),
+//             catchError((error) => of(AuthActions.registerFailure({error})))
+//           );
+//         }
+//       )
+//     );
+//   }, {functional: true}
+// );
 
-export const registerEffectSuccess$ = createEffect(
-  () => {
-    const actions$ = inject(Actions);
-    const localStorageTokenService = inject(LocalStorageTokenService);
-    const router = inject(Router);
-    return actions$.pipe(
-      ofType(AuthActions.registerSuccess),
-      concatMap((action) => {
-        localStorageTokenService.setItem(action.authToken);
-        router.navigate(['/home']);
-        return of();
-      })
-    );
-  }, {functional: true, dispatch: false}
-);
+// export const registerEffectSuccess$ = createEffect(
+//   () => {
+//     const actions$ = inject(Actions);
+//     const localStorageTokenService = inject(LocalStorageTokenService);
+//     const router = inject(Router);
+//     return actions$.pipe(
+//       ofType(AuthActions.registerSuccess),
+//       concatMap((action) => {
+//         localStorageTokenService.setItem(action.authToken);
+//         router.navigate(['/home']);
+//         return of();
+//       })
+//     );
+//   }, {functional: true, dispatch: false}
+// );
 
 export const loginEffect$ = createEffect(
   () => {
     const apiService = inject(ApiService);
     const actions$ = inject(Actions);
+    const router = inject(Router);
     return actions$.pipe(
       ofType(AuthActions.login),
-      switchMap(({userData}) => {
-        return apiService.post<AuthUser, SignAuthUser>('/auth/signin', userData).pipe(
-          map((userData) => AuthActions.loginSuccess({userData})),
-          catchError((error) => of(AuthActions.loginFailure({error})))
+      tap(v => console.log(v)),
+      map(({userData}) => userData),
+      switchMap((userData) => {
+        return apiService.post<any, SignAuthUser>('/auth/signin', userData).pipe(
+          tap((userData) => {
+            router.navigate(['/guest/home']);
+            return AuthActions.loginSuccess({userData})
+          } ),
+          catchError((error) => {
+            router.navigate(['/home']);
+            return of(AuthActions.loginFailure({error}));
+          })
         );
       })
     );

@@ -11,9 +11,9 @@ export class AuthFacadeService {
   private readonly store = inject(Store);
   public readonly isAuthenticated = this.store.selectSignal(selectIsAuthenticated);
 
-  public register(userData: NewUser) {
-    this.store.dispatch(AuthActions.register({userData}));
-  }
+  // public register(userData: NewUser) {
+  //   this.store.dispatch(AuthActions.register({userData}));
+  // }
 
   public login(userData: SignAuthUser) {
     this.store.dispatch(AuthActions.login({userData}))

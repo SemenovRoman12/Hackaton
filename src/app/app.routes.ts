@@ -21,7 +21,6 @@ export const routes: Routes = [
       },
       {
         path: 'my-servers',
-        canActivate: [authGuard],
         loadComponent: () => import('@features/feature-servers-catalog/my-servers/my-servers/my-servers.component').then(c => c.MyServersComponent),
       },
       {

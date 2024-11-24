@@ -10,14 +10,14 @@ export const authGuard = () => {
 
 
 
-  return apiService.get('servers/my').pipe(
+  return apiService.get<any>('/servers/my').pipe(
     catchError((error) => {
       if (error.status === 403) {
-        console.log(error.status === 403)
+        console.log(error.status)
         router.navigate(['/guest/home']);
         return of(false);
       }
-      console.log(error.status === 403)
+      router.navigate(['/guest/home']);
       return of(true);
     })
   );

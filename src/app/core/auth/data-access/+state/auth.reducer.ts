@@ -1,14 +1,14 @@
 import {LoadingStatus} from "@core/data-access/loading-status.type";
 import {createFeature, createReducer, on} from "@ngrx/store";
 import {AuthActions} from "@core/auth/data-access/+state/auth.actions";
-import {AuthUser} from "@core/auth/data-access/models/sign.auth.model";
+import {NewUser, SignAuthUser} from "@core/auth/data-access/models/sign.auth.model";
 
 export const AUTH_FEATURE_NAME = "auth";
 
 export interface AuthState {
   authStatus: LoadingStatus;
   error: Error | null;
-  userData: AuthUser | null;
+  userData: NewUser | null | SignAuthUser;
 }
 
 export const authInitialState: AuthState = {
