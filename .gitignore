@@ -1,123 +1,170 @@
-Для выполнения задания на Django я могу предоставить вам пошаговый план и подробные объяснения, включая структуру файлов, необходимые модели, представления, шаблоны и инструкции по настройке проекта.
-
-Задача состоит в разработке модуля "Учёт медицинских записей" с функционалом для работы с пациентами и врачами. Давайте начнем с самого простого примера. Вот примерный пошаговый план:
+Добавим регистрацию, авторизацию, страницу профиля и возможность разлогиниться. Мы будем использовать встроенную систему пользователей Django. Вот пошаговое руководство:
 
 
 ---
 
-1. Создание проекта и приложения
+1. Настройка регистрации и авторизации
 
-1. Создайте Django-проект:
+В приложении создадим необходимые формы и представления для регистрации и авторизации.
 
-django-admin startproject medical_records
-cd medical_records
+Добавьте ссылки на авторизацию и выход в base.html
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'medical_records_list' %}">Medical Records</a>
+    <div class="ml-auto">
+        {% if user.is_authenticated %}
+        <a href="{% url 'profile' %}" class="btn btn-outline-primary mr-2">Профиль</a>
+        <a href="{% url 'logout' %}" class="btn btn-outline-danger">Выход</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="btn btn-outline-primary mr-2">Вход</a>
+        <a href="{% url 'register' %}" class="btn btn-outline-success">Регистрация</a>
+        {% endif %}
+    </div>
+</nav>
 
 
-2. Создайте приложение для учёта данных:
+---
 
-python manage.py startapp records
+2. Форма регистрации
+
+Создайте файл records/forms.py, если его ещё нет:
+
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+
+class UserRegisterForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password1', 'password2']
 
 
-3. Добавьте приложение в settings.py:
+---
 
-INSTALLED_APPS = [
-    ...
-    'records',
+3. Представления
+
+В файле records/views.py добавьте следующие представления:
+
+Регистрация
+
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
+from .forms import UserRegisterForm
+
+def register(request):
+    if request.method == 'POST':
+        form = UserRegisterForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            return redirect('medical_records_list')
+    else:
+        form = UserRegisterForm()
+    return render(request, 'records/register.html', {'form': form})
+
+Авторизация
+
+from django.contrib.auth import login
+
+def user_login(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            return redirect('medical_records_list')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'records/login.html', {'form': form})
+
+Выход
+
+from django.contrib.auth import logout
+
+def user_logout(request):
+    logout(request)
+    return redirect('medical_records_list')
+
+Страница профиля
+
+@login_required
+def profile(request):
+    return render(request, 'records/profile.html', {'user': request.user})
+
+
+---
+
+4. Шаблоны
+
+Шаблон регистрации: templates/records/register.html
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Регистрация</h1>
+<form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-success mt-3">Зарегистрироваться</button>
+</form>
+{% endblock %}
+
+Шаблон авторизации: templates/records/login.html
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Вход</h1>
+<form method="post">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-primary mt-3">Войти</button>
+</form>
+{% endblock %}
+
+Шаблон профиля: templates/records/profile.html
+
+{% extends 'base.html' %}
+
+{% block content %}
+<h1 class="mb-4">Профиль пользователя</h1>
+<p><strong>Имя пользователя:</strong> {{ user.username }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+{% endblock %}
+
+
+---
+
+5. Маршруты
+
+Добавьте маршруты для новых функций в records/urls.py:
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.medical_records_list, name='medical_records_list'),
+    path('add/', views.add_medical_record, name='add_medical_record'),
+    path('register/', views.register, name='register'),
+    path('login/', views.user_login, name='login'),
+    path('logout/', views.user_logout, name='logout'),
+    path('profile/', views.profile, name='profile'),
 ]
 
 
-
-
 ---
 
-2. Создание моделей
+6. Защита страниц
 
-В файле records/models.py создайте следующие модели:
+Чтобы ограничить доступ к добавлению записей только авторизованным пользователям, обновите функцию add_medical_record:
 
-from django.db import models
+from django.contrib.auth.decorators import login_required
 
-class Doctor(models.Model):
-    full_name = models.CharField(max_length=100, verbose_name="ФИО")
-    specialization = models.CharField(max_length=100, verbose_name="Специальность")
-    contact_details = models.TextField(verbose_name="Контактные данные")
-
-    def __str__(self):
-        return self.full_name
-
-class Patient(models.Model):
-    full_name = models.CharField(max_length=100, verbose_name="ФИО")
-    birth_date = models.DateField(verbose_name="Дата рождения")
-    gender = models.CharField(max_length=10, choices=[('M', 'Мужской'), ('F', 'Женский')], verbose_name="Пол")
-    age = models.PositiveIntegerField(verbose_name="Возраст")
-    chronic_diseases = models.TextField(verbose_name="Хронические заболевания")
-
-    def __str__(self):
-        return self.full_name
-
-class MedicalRecord(models.Model):
-    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, verbose_name="Пациент")
-    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, verbose_name="Врач")
-    date = models.DateField(verbose_name="Дата")
-    time = models.TimeField(verbose_name="Время")
-    diagnosis = models.TextField(verbose_name="Диагноз")
-
-    def __str__(self):
-        return f"{self.patient} - {self.date}"
-
-
----
-
-3. Выполните миграции
-
-Создайте и примените миграции:
-
-python manage.py makemigrations
-python manage.py migrate
-
-
----
-
-4. Создание административной панели
-
-Добавьте модели в админку (records/admin.py):
-
-from django.contrib import admin
-from .models import Doctor, Patient, MedicalRecord
-
-admin.site.register(Doctor)
-admin.site.register(Patient)
-admin.site.register(MedicalRecord)
-
-Запустите сервер и зайдите в административную панель:
-
-python manage.py runserver
-
-
----
-
-5. Создание представлений и форм
-
-1. Формы: создайте файл records/forms.py:
-
-from django import forms
-from .models import MedicalRecord
-
-class MedicalRecordForm(forms.ModelForm):
-    class Meta:
-        model = MedicalRecord
-        fields = '__all__'
-
-
-2. Представления: в records/views.py:
-
-from django.shortcuts import render, redirect
-from .models import MedicalRecord
-from .forms import MedicalRecordForm
-
-def medical_records_list(request):
-    records = MedicalRecord.objects.all()
-    return render(request, 'records/medical_records_list.html', {'records': records})
-
+@login_required
 def add_medical_record(request):
     if request.method == 'POST':
         form = MedicalRecordForm(request.POST)
@@ -129,73 +176,30 @@ def add_medical_record(request):
     return render(request, 'records/add_medical_record.html', {'form': form})
 
 
-
-
 ---
 
-6. Настройка маршрутов
+7. Тестирование
 
-Добавьте маршруты в records/urls.py:
-
-from django.urls import path
-from . import views
-
-urlpatterns = [
-    path('', views.medical_records_list, name='medical_records_list'),
-    path('add/', views.add_medical_record, name='add_medical_record'),
-]
-
-Подключите их в medical_records/urls.py:
-
-from django.contrib import admin
-from django.urls import path, include
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('records.urls')),
-]
-
-
----
-
-7. Создание шаблонов
-
-1. Создайте папку templates/records в приложении.
-
-
-2. Шаблон списка записей (medical_records_list.html):
-
-<h1>Медицинские записи</h1>
-<a href="{% url 'add_medical_record' %}">Добавить запись</a>
-<ul>
-    {% for record in records %}
-        <li>{{ record.patient }} - {{ record.diagnosis }} ({{ record.date }})</li>
-    {% endfor %}
-</ul>
-
-
-3. Шаблон добавления записи (add_medical_record.html):
-
-<h1>Добавить медицинскую запись</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Сохранить</button>
-</form>
-
-
-
-
----
-
-8. Тестирование
-
-Запустите сервер и проверьте функционал:
+1. Запустите сервер:
 
 python manage.py runserver
 
 
+2. Проверьте:
+
+Регистрацию: http://127.0.0.1:8000/register/
+
+Авторизацию: http://127.0.0.1:8000/login/
+
+Профиль: http://127.0.0.1:8000/profile/
+
+Выход: http://127.0.0.1:8000/logout/
+
+
+
+
+
 ---
 
-Если у вас будут вопросы или возникнут сложности, напишите — я помогу!
+Теперь вы имеете полностью работающую систему с регистрацией, авторизацией, страницей профиля и возможностью разлогиниться. Если нужны доработки, дайте знать!
 
