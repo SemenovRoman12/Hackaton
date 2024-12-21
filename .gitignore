@@ -1,205 +1,56 @@
-Добавим регистрацию, авторизацию, страницу профиля и возможность разлогиниться. Мы будем использовать встроенную систему пользователей Django. Вот пошаговое руководство:
-
-
----
-
-1. Настройка регистрации и авторизации
-
-В приложении создадим необходимые формы и представления для регистрации и авторизации.
-
-Добавьте ссылки на авторизацию и выход в base.html
-
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{% url 'medical_records_list' %}">Medical Records</a>
-    <div class="ml-auto">
-        {% if user.is_authenticated %}
-        <a href="{% url 'profile' %}" class="btn btn-outline-primary mr-2">Профиль</a>
-        <a href="{% url 'logout' %}" class="btn btn-outline-danger">Выход</a>
-        {% else %}
-        <a href="{% url 'login' %}" class="btn btn-outline-primary mr-2">Вход</a>
-        <a href="{% url 'register' %}" class="btn btn-outline-success">Регистрация</a>
-        {% endif %}
-    </div>
-</nav>
-
-
----
-
-2. Форма регистрации
-
-Создайте файл records/forms.py, если его ещё нет:
-
-from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-
-class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']
-
-
----
-
-3. Представления
-
-В файле records/views.py добавьте следующие представления:
-
-Регистрация
-
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, redirect
-from .forms import UserRegisterForm
-
-def register(request):
-    if request.method == 'POST':
-        form = UserRegisterForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-            login(request, user)
-            return redirect('medical_records_list')
-    else:
-        form = UserRegisterForm()
-    return render(request, 'records/register.html', {'form': form})
-
-Авторизация
-
-from django.contrib.auth import login
-
-def user_login(request):
-    if request.method == 'POST':
-        form = AuthenticationForm(data=request.POST)
-        if form.is_valid():
-            user = form.get_user()
-            login(request, user)
-            return redirect('medical_records_list')
-    else:
-        form = AuthenticationForm()
-    return render(request, 'records/login.html', {'form': form})
-
-Выход
-
-from django.contrib.auth import logout
-
-def user_logout(request):
-    logout(request)
-    return redirect('medical_records_list')
-
-Страница профиля
-
-@login_required
-def profile(request):
-    return render(request, 'records/profile.html', {'user': request.user})
-
-
----
-
-4. Шаблоны
-
-Шаблон регистрации: templates/records/register.html
-
-{% extends 'base.html' %}
-
-{% block content %}
-<h1 class="mb-4">Регистрация</h1>
-<form method="post">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <button type="submit" class="btn btn-success mt-3">Зарегистрироваться</button>
-</form>
-{% endblock %}
-
-Шаблон авторизации: templates/records/login.html
-
-{% extends 'base.html' %}
-
-{% block content %}
-<h1 class="mb-4">Вход</h1>
-<form method="post">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <button type="submit" class="btn btn-primary mt-3">Войти</button>
-</form>
-{% endblock %}
-
-Шаблон профиля: templates/records/profile.html
-
-{% extends 'base.html' %}
-
-{% block content %}
-<h1 class="mb-4">Профиль пользователя</h1>
-<p><strong>Имя пользователя:</strong> {{ user.username }}</p>
-<p><strong>Email:</strong> {{ user.email }}</p>
-{% endblock %}
-
-
----
-
-5. Маршруты
-
-Добавьте маршруты для новых функций в records/urls.py:
-
-from django.urls import path
-from . import views
-
-urlpatterns = [
-    path('', views.medical_records_list, name='medical_records_list'),
-    path('add/', views.add_medical_record, name='add_medical_record'),
-    path('register/', views.register, name='register'),
-    path('login/', views.user_login, name='login'),
-    path('logout/', views.user_logout, name='logout'),
-    path('profile/', views.profile, name='profile'),
-]
-
-
----
-
-6. Защита страниц
-
-Чтобы ограничить доступ к добавлению записей только авторизованным пользователям, обновите функцию add_medical_record:
-
-from django.contrib.auth.decorators import login_required
-
-@login_required
-def add_medical_record(request):
-    if request.method == 'POST':
-        form = MedicalRecordForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('medical_records_list')
-    else:
-        form = MedicalRecordForm()
-    return render(request, 'records/add_medical_record.html', {'form': form})
-
-
----
-
-7. Тестирование
-
-1. Запустите сервер:
-
-python manage.py runserver
-
-
-2. Проверьте:
-
-Регистрацию: http://127.0.0.1:8000/register/
-
-Авторизацию: http://127.0.0.1:8000/login/
-
-Профиль: http://127.0.0.1:8000/profile/
-
-Выход: http://127.0.0.1:8000/logout/
-
-
-
-
-
----
-
-Теперь вы имеете полностью работающую систему с регистрацией, авторизацией, страницей профиля и возможностью разлогиниться. Если нужны доработки, дайте знать!
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Records</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        main {
+            flex: 1;
+        }
+        footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 10px 0;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="{% url 'medical_records_list' %}">Medical Records</a>
+            <div class="ml-auto">
+                {% if user.is_authenticated %}
+                    {% if user.is_staff %}
+                        <a href="/admin/" class="btn btn-outline-secondary mr-2">Админка</a>
+                    {% endif %}
+                    <a href="{% url 'profile' %}" class="btn btn-outline-primary mr-2">Профиль</a>
+                    <a href="{% url 'logout' %}" class="btn btn-outline-danger">Выход</a>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-outline-primary mr-2">Вход</a>
+                    <a href="{% url 'register' %}" class="btn btn-outline-success">Регистрация</a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mt-4">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <footer>
+        <p>© 2024 Medical Records. Все права защищены.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
