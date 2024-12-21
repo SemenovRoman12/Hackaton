@@ -1,42 +1,201 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+Для выполнения задания на Django я могу предоставить вам пошаговый план и подробные объяснения, включая структуру файлов, необходимые модели, представления, шаблоны и инструкции по настройке проекта.
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+Задача состоит в разработке модуля "Учёт медицинских записей" с функционалом для работы с пациентами и врачами. Давайте начнем с самого простого примера. Вот примерный пошаговый план:
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
 
-# IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+---
 
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
+1. Создание проекта и приложения
 
-# Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
+1. Создайте Django-проект:
 
-# System files
-.DS_Store
-Thumbs.db
+django-admin startproject medical_records
+cd medical_records
+
+
+2. Создайте приложение для учёта данных:
+
+python manage.py startapp records
+
+
+3. Добавьте приложение в settings.py:
+
+INSTALLED_APPS = [
+    ...
+    'records',
+]
+
+
+
+
+---
+
+2. Создание моделей
+
+В файле records/models.py создайте следующие модели:
+
+from django.db import models
+
+class Doctor(models.Model):
+    full_name = models.CharField(max_length=100, verbose_name="ФИО")
+    specialization = models.CharField(max_length=100, verbose_name="Специальность")
+    contact_details = models.TextField(verbose_name="Контактные данные")
+
+    def __str__(self):
+        return self.full_name
+
+class Patient(models.Model):
+    full_name = models.CharField(max_length=100, verbose_name="ФИО")
+    birth_date = models.DateField(verbose_name="Дата рождения")
+    gender = models.CharField(max_length=10, choices=[('M', 'Мужской'), ('F', 'Женский')], verbose_name="Пол")
+    age = models.PositiveIntegerField(verbose_name="Возраст")
+    chronic_diseases = models.TextField(verbose_name="Хронические заболевания")
+
+    def __str__(self):
+        return self.full_name
+
+class MedicalRecord(models.Model):
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, verbose_name="Пациент")
+    doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, verbose_name="Врач")
+    date = models.DateField(verbose_name="Дата")
+    time = models.TimeField(verbose_name="Время")
+    diagnosis = models.TextField(verbose_name="Диагноз")
+
+    def __str__(self):
+        return f"{self.patient} - {self.date}"
+
+
+---
+
+3. Выполните миграции
+
+Создайте и примените миграции:
+
+python manage.py makemigrations
+python manage.py migrate
+
+
+---
+
+4. Создание административной панели
+
+Добавьте модели в админку (records/admin.py):
+
+from django.contrib import admin
+from .models import Doctor, Patient, MedicalRecord
+
+admin.site.register(Doctor)
+admin.site.register(Patient)
+admin.site.register(MedicalRecord)
+
+Запустите сервер и зайдите в административную панель:
+
+python manage.py runserver
+
+
+---
+
+5. Создание представлений и форм
+
+1. Формы: создайте файл records/forms.py:
+
+from django import forms
+from .models import MedicalRecord
+
+class MedicalRecordForm(forms.ModelForm):
+    class Meta:
+        model = MedicalRecord
+        fields = '__all__'
+
+
+2. Представления: в records/views.py:
+
+from django.shortcuts import render, redirect
+from .models import MedicalRecord
+from .forms import MedicalRecordForm
+
+def medical_records_list(request):
+    records = MedicalRecord.objects.all()
+    return render(request, 'records/medical_records_list.html', {'records': records})
+
+def add_medical_record(request):
+    if request.method == 'POST':
+        form = MedicalRecordForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('medical_records_list')
+    else:
+        form = MedicalRecordForm()
+    return render(request, 'records/add_medical_record.html', {'form': form})
+
+
+
+
+---
+
+6. Настройка маршрутов
+
+Добавьте маршруты в records/urls.py:
+
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.medical_records_list, name='medical_records_list'),
+    path('add/', views.add_medical_record, name='add_medical_record'),
+]
+
+Подключите их в medical_records/urls.py:
+
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('records.urls')),
+]
+
+
+---
+
+7. Создание шаблонов
+
+1. Создайте папку templates/records в приложении.
+
+
+2. Шаблон списка записей (medical_records_list.html):
+
+<h1>Медицинские записи</h1>
+<a href="{% url 'add_medical_record' %}">Добавить запись</a>
+<ul>
+    {% for record in records %}
+        <li>{{ record.patient }} - {{ record.diagnosis }} ({{ record.date }})</li>
+    {% endfor %}
+</ul>
+
+
+3. Шаблон добавления записи (add_medical_record.html):
+
+<h1>Добавить медицинскую запись</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Сохранить</button>
+</form>
+
+
+
+
+---
+
+8. Тестирование
+
+Запустите сервер и проверьте функционал:
+
+python manage.py runserver
+
+
+---
+
+Если у вас будут вопросы или возникнут сложности, напишите — я помогу!
+
